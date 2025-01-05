@@ -570,7 +570,8 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
         ORS.Get(sym);
         IF sym = ORS.ident THEN
           qualident(obj); orgtype := obj.type;
-          IF (orgtype.form = ORB.Pointer) OR (orgtype.form = ORB.Record) & (obj.class = ORB.Par) THEN
+          IF (orgtype.form = ORB.Pointer) & (obj.class = ORB.Var) & (orgtype.base.form = ORB.Record) OR
+             (orgtype.form = ORB.Record) & (obj.class = ORB.Par) THEN
             Check(ORS.of, "OF expected"); TypeCase(obj, x); L0 := 0;
             WHILE sym = ORS.bar DO
               ORS.Get(sym); ORG.FJump(L0); ORG.Fixup(x); obj.type := orgtype; TypeCase(obj, x)
